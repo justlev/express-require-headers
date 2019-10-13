@@ -1,6 +1,6 @@
 {
   "name": "express-require-headers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An express middleware to require headers and fail a request if they do not exist",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
