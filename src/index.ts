@@ -1,10 +1,12 @@
-export function requireHeaders(expectedHeaders: Headers, failStatus?: number, failResponseBody?: any) {
+export function requireHeaders(headers: Headers, failStatus?: number, failResponseBody?: any) {
+    const expectedHeaders = getLowercaseHeaders(headers);
+    const headersKeys = Object.keys(expectedHeaders);
     return (req: any, res: any, next: any) => {
-        const headersKeys = Object.keys(expectedHeaders);
+        const actualHeaders = getLowercaseHeaders(req.headers);
         const errors = {};
         for (const headerKey of headersKeys) {
             const expectedVal = expectedHeaders[headerKey];
-            const actualVal = req.headers[headerKey];
+            const actualVal = actualHeaders[headerKey];
             if (expectedVal !== actualVal){
                 errors[headerKey] = failResponseBody || `Value ${actualVal} incorrect`;
             }
@@ -15,6 +17,15 @@ export function requireHeaders(expectedHeaders: Headers, failStatus?: number, fa
         }
         next();
     }
+}
+
+function getLowercaseHeaders(headers: Headers) {
+    const keys = Object.keys(headers);
+    const res = {};
+    for (const key of keys){
+        res[key.toLowerCase()] = headers[key];
+    }
+    return res;
 }
 
 export type Headers = {[key: string]: string};

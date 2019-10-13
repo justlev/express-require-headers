@@ -34,6 +34,16 @@ describe('requireHeaders middleware', () => {
         });
     });
 
+    describe('headers match case insensitive', () => {
+        const actualHeaders = {...expectedHeaders, 'x-AuTh-Token': 'SUPER_SECRET_AUTH_TOKEN'};
+
+        test('it calls the next function', () => {
+            middleware({headers: actualHeaders}, response, nextFn);
+
+            expect(nextFn).toBeCalled();
+        });
+    });
+
     describe('headers partially match', () => {
         const actualHeaders = {...expectedHeaders, 'X-ANOTHER-HEADER': 'SomeOtherVal'};
         test('it does not call the next function', () => {
@@ -46,7 +56,7 @@ describe('requireHeaders middleware', () => {
             middleware({headers: actualHeaders}, response, nextFn);
 
             expect(response.send.mock.calls).toEqual([
-                [{errors: {'X-ANOTHER-HEADER': `Value SomeOtherVal incorrect`}}]
+                [{errors: {'x-another-header': `Value SomeOtherVal incorrect`}}]
             ]);
             expect(response.status.mock.calls).toEqual([
                 [400]
@@ -68,8 +78,8 @@ describe('requireHeaders middleware', () => {
                     {
                         errors:
                             {
-                                'X-AUTH-TOKEN': `Value undefined incorrect`,
-                                'X-ANOTHER-HEADER': `Value undefined incorrect`
+                                'x-auth-token': `Value undefined incorrect`,
+                                'x-another-header': `Value undefined incorrect`
                             }
                     }
                 ]
@@ -92,8 +102,8 @@ describe('requireHeaders middleware', () => {
                         {
                             errors:
                                 {
-                                    'X-AUTH-TOKEN': `SomeError`,
-                                    'X-ANOTHER-HEADER': `SomeError`
+                                    'x-auth-token': `SomeError`,
+                                    'x-another-header': `SomeError`
                                 }
                         }
                     ]

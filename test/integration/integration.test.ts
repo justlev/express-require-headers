@@ -15,6 +15,6 @@ describe("integration with ExpressJs", () => {
         const res = await request.get('/');
 
         expect(res.status).toEqual(400);
-        expect(res.body).toEqual({errors: {Token: "Value undefined incorrect"}});
+        expect(res.body).toEqual({errors: {token: "Value undefined incorrect"}});
     });
 });
