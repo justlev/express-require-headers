@@ -1,4 +1,4 @@
-export default function requireHeaders(expectedHeaders: Headers, failStatus?: number, failResponseBody?: any) {
+export function requireHeaders(expectedHeaders: Headers, failStatus?: number, failResponseBody?: any) {
     return (req: any, res: any, next: any) => {
         const headersKeys = Object.keys(expectedHeaders);
         const errors = {};

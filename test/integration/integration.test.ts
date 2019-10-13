@@ -1,6 +1,6 @@
 import express = require("express");
 import supertest = require("supertest");
-import requireHeaders from "../../src";
+import {requireHeaders} from "../../src";
 
 
 describe("integration with ExpressJs", () => {

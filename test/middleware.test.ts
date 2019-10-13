@@ -1,4 +1,4 @@
-import requireHeaders from "../src";
+import {requireHeaders} from "../src";
 
 describe('requireHeaders middleware', () => {
     const nextFn = jest.fn();
